@@ -1,7 +1,7 @@
 """
-235. Lowest Common Ancestor of a Binary Search Tree_E
+1644. Lowest Common Ancestor of a Binary Tree II
 
-https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree-iii/
+https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree-ii/
 
 ##############################
 
@@ -10,65 +10,54 @@ https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree-iii/
 
 #################################
 考点或思路:
-
 """
 
-
-# Definition for a Node.
-class Node:
-    def __init__(self, val):
-        self.val = val
+# Definition for a binary tree node.
+class TreeNode:
+    def __init__(self, x):
+        self.val = x
         self.left = None
         self.right = None
-        self.parent = None
-
 
 class Solution:
-    def lowestCommonAncestor(self, p: 'Node', q: 'Node') -> 'Node':
+    def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
         """
-        [Approach] Notice that we dont have the tree ,we have the two node, and we could backtrace their ancestors by using the parentPointer.
-        So we can back trace the ancestors and put them in stack. and compare the two stacks.
-        time_O(2H)  Back trace to the root of the tree twice, will need 2H where H is the high of the tree. and Compare the two stacks, need (H)
-        space_O(2H) store the ancestors for each node.
+        time: 051922  
+        [Approach_stack_dict] travese to find p and q, if any of them does not exist, return Null.
+         during traverse, use a dict to record the parent-child relationship, and when we find p or q, we put the ancestors in to stack.
+         then we compare the two stack ,to get LCA.
+         time_O(2N+2H+H)---> (N), treavese twice make it 2*N, full up the stack make it 2*H, where H is the high of the tree, may be N at worst.
+                      comparing the two stack make it H. so time_O would be 2N+2H+H.
+        space_O(N+2H) parent-child relationship dict would need N , two stack will need 2*H.
         """
-        pstack = [p]
-        qstack = [q]
-        cur = p
-        while cur.parent:
-            pstack.insert(0,cur.parent)
-            cur = cur.parent
-        cur = q
-        while cur.parent:
-            qstack.insert(0,cur.parent)
-            cur = cur.parent      
+        pdict = {root:None}
+        def preOrder(root,target,stack):
+            if root.val == target.val:
+                p = pdict[root]
+                while p :
+                    stack.insert(0,p)
+                    p = pdict[p]
+                stack.append(root)
+                return
+            if root.left:
+                pdict[root.left] = root
+                preOrder(root.left, target, stack)
+            if root.right and stack == []:
+                pdict[root.right] = root
+                preOrder(root.right, target, stack)
+        
+        pstack = []
+        qstack = []
+        preOrder(root,p, pstack)
+        preOrder(root,q, qstack)
         LCA = None
+        # if not pstack or not qstack:
+        #     return None
         for i in range(min(len(pstack), len(qstack))):
             if pstack[i] == qstack[i]:
                 LCA = pstack[i]
             else:
                 break
-        
         return LCA
-    
-    def lowestCommonAncestor_V2(self, p: 'Node', q: 'Node') -> 'Node':
-        """
-        [Approach] we move p or q up towards the root of the tree. and we keep a record of what node we have visited.
-        If we go to a node, this node is new to us, add it in visited set. else if this node is already in the visited set,
-        that means this node is LCA.
-        time_O(H) we go up the tree, the maximum step is the height of the tree. In this case ,the worst would be N/2.
-        space_O(N) the worst case is store all the node in this tree and finally get the root as LCA.
-        """
-        visited = set()
-        while p or q:
-            if p :
-                if p in visited:
-                    return p
-                visited.add(p)
-                p = p.parent
-            if q:
-                if q in visited:
-                    return q
-                visited.add(q)
-                q = q.parent
                 
         
