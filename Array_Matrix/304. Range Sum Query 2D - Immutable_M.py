@@ -6,7 +6,7 @@ https://leetcode.com/problems/range-sum-query-2d-immutable/
 ##############################
 
 类似题型:
-
+303. Range Sum Query - Immutable_E
 
 #################################
 考点或思路:
@@ -17,7 +17,7 @@ from types import List
 class NumMatrix:
     """
     time: 2022/06/03  02:00---2:39
-    [Approach] The function sumRegion is going to be called a lot. So we should primarily focusing on the efficency of this function.
+    [Approach]【PrefixSum】 The function sumRegion is going to be called a lot. So we should primarily focusing on the efficency of this function.
     we can calculate the sum at the inital part, it will only happen once.
     we make a matrix with the same size, each of element denote the sum of the rectangle which has the (i,j) as lower right corner and (0,0) as the upper left corner.
     So when we call sumRegion, we use the sum of four rectangles, to make up what we need.
