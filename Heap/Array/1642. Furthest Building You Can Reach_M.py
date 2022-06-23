@@ -6,8 +6,7 @@ https://leetcode.com/problems/furthest-building-you-can-reach/
 
 ##############################
 
-类似题型:
-
+Similar problems:
 
 #################################
 考点或思路:
