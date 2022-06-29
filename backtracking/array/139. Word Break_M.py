@@ -48,7 +48,7 @@ class Solution:
         Each of the break point apart the string into two substring which also are valid to break apart and be in the wordDict.
         **674 ms, faster than 5.17% of Python3 online submissions for Word Break.**
 
-        time_O() ???
+        time_O(N logN)   N = len(s)
         """
     
         wordset = set(wordDict)
