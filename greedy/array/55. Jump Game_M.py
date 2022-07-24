@@ -11,7 +11,7 @@ Similar problems:
 
 """
 
-from gettext import dpgettext
+# from gettext import dpgettext
 from typing import List
 
 class Solution:
