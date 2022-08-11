@@ -21,6 +21,43 @@ class TreeNode:
         self.left = left
         self.right = right
 class Solution:
+    def isValidBST_V1(self, root: Optional[TreeNode]) -> bool:
+        """
+        time: 08/11/2022 10:20--10:50
+        [Approach] It is clear that if we traverse the tree in preorder, we should be able to get a
+        list with strictly increasing elements.
+        So we can preorder traverse the tree, see if it fits the condition.
+        
+        Time_O(N) N is the number of the treenode. we traverse the tree once.
+        Space_O(N+H) H is the height of the tree, if we traverse recursively, the recurse depth will be H.
+         N is for array to store the element
+        """
+        
+        def preOrder(node,lst):
+            if node.left:
+                if preOrder(node.left,lst) == False:
+                    return False
+            
+            if lst and lst[-1] >= node.val:
+                return False
+            
+            lst.append(node.val)
+            if node.right:
+                if preOrder(node.right,lst) == False:
+                    return False
+            return True
+        
+        if root == None:
+            return True
+        
+        lst = []
+        return preOrder(root,lst)
+        
+        
+
+
+
+
     def isValidBST(self, root: Optional[TreeNode]) -> bool:
         """
         time: 07/24/2022 9:00--
