@@ -16,6 +16,7 @@ Similar problems:
 
 
 【Trie：prefixTree】
+208. Implement Trie (Prefix Tree) 基本原理，学习实现一个trie
 
 """
 
@@ -71,4 +72,20 @@ class TrieNode:
 
 class Solution:
     def findWords(self, board: List[List[str]], words: List[str]) -> List[str]:
-        
+        # step one: build prefix tree
+        root = TrieNode("")
+        for w in words:
+            root.addword(w)
+
+        rows , cols = len(board), len(board[0])
+        outputSet, visitedSet = set(), set()
+
+        def rec(r,c, node, substr):
+            # r,c is where are we now on the board, the next ch we with check
+            # node is the current Trienode we are on, it may be a char in a prefix path
+            # substr is the prefix path we just visit and build up, will become a word in the list ,
+            # and when that happens, we put the substr into our outputSet.
+            
+
+        # step two: recurse to search word
+        # step three: go through the board
